@@ -2,10 +2,11 @@ CREATE TABLE users (
     user_id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
     user_name varchar(255) NOT NULL UNIQUE,
     user_password varchar(255) NOT NULL,
+    user_email varchar(255) NOT NULL,
     is_admin boolean DEFAULT false
 );
-INSERT INTO users(user_name, user_password, is_admin) VALUES('admin1', 'user@123', true);
-INSERT INTO users(user_name, user_password) VALUES('user', 'user@1');
+INSERT INTO users(user_name, user_password,user_email,is_admin) VALUES('admin1', 'user@123','mokhirbekiskandarov5@gmail.com', true);
+INSERT INTO users(user_name, user_password,user_email) VALUES('user', 'user@1', 'user1@gmail.com');
 
 CREATE TABLE categories (
     category_id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
