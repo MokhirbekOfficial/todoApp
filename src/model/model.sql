@@ -21,8 +21,12 @@ CREATE TABLE tasks (
     task_status boolean DEFAULT false,
     task_time timestamptz DEFAULT CURRENT_TIMESTAMP,
     task_category uuid DEFAULT NULL,
+    task_owner uuid DEFAULT NULL,
     FOREIGN KEY (task_category)
         REFERENCES categories(category_id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (task_owner)
+        REFERENCES users(user_id)
         ON DELETE CASCADE
 );
 INSERT INTO tasks(task_description,task_category) VALUES('Ertalabki badantarbiya', '7423e07b-054f-405e-a22d-10b4669e10e3');

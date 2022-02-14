@@ -17,16 +17,16 @@ RETURNING *
 `
 const AddTask = `
 INSERT INTO tasks
-    (task_description,task_status,task_category)
+    (task_description,task_status,task_category,task_owner)
 VALUES 
-    ($1,$2,$3)
+    ($1,$2,$3,$4)
 RETURNING *
 `
 
 
 const addUser = (user_name,user_password,user_email) => fetch(AddUser,user_name,user_password,user_email)
 const addCategory = (category_name) => fetch(AddCategory,category_name)
-const addTask = (task_description,task_status,task_category) => fetch(AddTask,task_description,task_status,task_category)
+const addTask = (task_description,task_status,task_category,task_owner) => fetch(AddTask,task_description,task_status,task_category,task_owner)
 
 
 module.exports = {

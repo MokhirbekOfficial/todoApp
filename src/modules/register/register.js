@@ -1,4 +1,5 @@
 const {addUser, addCategory, addTask} = require('./model')
+const {getAdmin} = require('../admin/model')
 const secret_key = 'TODOAPP'
 const jwt = require('jsonwebtoken')
 
@@ -17,18 +18,24 @@ module.exports = {
     },
     addCategory: async(req, res) => {
         try {
-            let {category_name} = req.body
-            let newCategory = await addCategory(category_name)
-            res.status(201).send(newCategory)
-        } catch(e) {
-            console.log(e.message)
-            res.status(405).json(e.message)
+            let {token, category_name} = req.body
+            const decoded = jwt.verify(token, secret_key)
+
+            let Admin = await getAdmin(decoded.user_id)
+            if(Admin.is_admin){
+                let newCategory = await addCategory(category_name)
+                res.status(201).send(newCategory)
+            }
+            res.status(401).send('Unauthorithed')
+            } catch(e) {
+                console.log(e.message)
+             res.status(405).json(e.message)
         }
     },
     addTask: async(req, res) => {
         try {
-            let {task_description,task_status,task_category} = req.body
-            let newTask = await addTask(task_description,task_status,task_category)
+            let {task_description,task_status,task_category,task_owner} = req.body
+            let newTask = await addTask(task_description,task_status,task_category,task_owner)
             res.status(201).send(newTask)
         } catch(e) {
             console.log(e.message)
