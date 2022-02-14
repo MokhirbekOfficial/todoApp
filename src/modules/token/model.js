@@ -4,11 +4,11 @@ const TokenChecker = `
 SELECT 
     *
 FROM
-    blog_admin
+    users
 WHERE 
-    admin_id = $1
+    user_id = $1
 `
-const tokenchecker = (admin_id) => fetch(TokenChecker, admin_id)
+const tokenchecker = (user_id) => fetch(TokenChecker, user_id)
 
 module.exports = {
     tokenchecker

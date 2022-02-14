@@ -7,8 +7,8 @@ module.exports = {
         try{
             let {token} = req.body
             const decoded = jwt.verify(token, secret_key)
-            await tokenchecker(decoded.admin_id)
-            res.status(200).send('OK')
+            let user = await tokenchecker(decoded.user_id)
+            res.status(200).send(user.is_admin)
         }catch(e){
             console.log(e.message)
             res.status(405).json(e.message)
