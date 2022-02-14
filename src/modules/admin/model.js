@@ -58,12 +58,30 @@ RETURNING
     *
 `
 
+const DeleteUsers = `
+DELETE
+FROM
+    users
+WHERE
+    user_id = $1
+`
+
+const DeleteCategory = `
+DELETE
+FROM
+    categories
+WHERE
+    category_id = $1
+`
+
 
 const getAdmin = (user_id) => fetch(GetAdmin,user_id)
 const getUsers = () => fetchAll(GetUsers)
 const getTasks = () => fetchAll(GetTasks)
 const updateUsers = (user_name,user_password,user_email,user_id) => fetch(UpdateUsers,user_name,user_password,user_email,user_id)
 const updateCategory = (category_name,category_id) => fetch(UpdateCategory,category_name,category_id)
+const deleteUsers = (user_id) => fetch(DeleteUsers,user_id)
+const deleteCategory = (category_id) => fetch(DeleteCategory,category_id)
 
 
 module.exports = {
@@ -71,5 +89,7 @@ module.exports = {
     getUsers,
     getTasks,
     updateUsers,
-    updateCategory
+    updateCategory,
+    deleteUsers,
+    deleteCategory
 }

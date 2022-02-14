@@ -24,5 +24,8 @@ router
     .put('/user/updatetasks', users.updateTasks)
 
     .delete('/user/deletetask', users.deleteTask)
+    .delete('/admin/deleteuser', admin.deleteUser)
+    .delete('/admin/deletecategory', admin.deleteCategory)
+
 
 module.exports = router

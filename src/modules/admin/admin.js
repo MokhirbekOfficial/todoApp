@@ -1,4 +1,4 @@
-const {getUsers,getAdmin,getTasks,updateUsers,updateCategory} = require('./model')
+const {getUsers,getAdmin,getTasks,updateUsers,updateCategory,deleteUsers,deleteCategory} = require('./model')
 const secret_key = 'TODOAPP'
 const jwt = require('jsonwebtoken')
 
@@ -60,6 +60,38 @@ module.exports = {
             if(Admin.is_admin){
                 let updated = await updateCategory(category_name,category_id)
                 return res.status(200).send(updated)
+            }
+            res.status(401).send('Unauthorithed')
+        } catch(e) {
+            console.log(e.message)
+            res.status(405).json(e.message)
+        }
+    },
+    deleteUser: async(req, res) => {
+        try {
+            let {token,user_id} = req.body
+            const decoded = jwt.verify(token, secret_key)
+
+            let Admin = await getAdmin(decoded.user_id)
+            if(Admin.is_admin){
+                await deleteUsers(user_id)
+                return res.status(200).send('User is successfully DELETED!')
+            }
+            res.status(401).send('Unauthorithed')
+        } catch(e) {
+            console.log(e.message)
+            res.status(405).json(e.message)
+        }
+    },
+    deleteCategory: async(req, res) => {
+        try {
+            let {token,category_id} = req.body
+            const decoded = jwt.verify(token, secret_key)
+
+            let Admin = await getAdmin(decoded.user_id)
+            if(Admin.is_admin){
+                await deleteCategory(category_id)
+                return res.status(200).send('Category is successfully DELETED!')
             }
             res.status(401).send('Unauthorithed')
         } catch(e) {
